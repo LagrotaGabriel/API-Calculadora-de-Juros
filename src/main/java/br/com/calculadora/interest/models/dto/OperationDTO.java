@@ -1,10 +1,10 @@
 package br.com.calculadora.interest.models.dto;
 
 import br.com.calculadora.interest.models.enums.InterestTypeEnum;
-import com.sun.istack.NotNull;
+import br.com.calculadora.interest.models.enums.TimeCategory;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter @Setter
@@ -14,18 +14,31 @@ import java.time.LocalDateTime;
 @Builder
 public class OperationDTO {
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Long id;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private LocalDateTime localDateTime;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Double applied;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Double amount;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Double interestRate;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Double interest;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    private Integer time;
+
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    private TimeCategory timeCategory;
+
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private InterestTypeEnum interestTypeEnum;
 
 }
