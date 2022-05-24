@@ -1,6 +1,8 @@
 package br.com.calculadora.interest.services.dao;
 
+import br.com.calculadora.interest.config.ModelMapperConfig;
 import br.com.calculadora.interest.exceptions.ObjectNotFoundException;
+import br.com.calculadora.interest.models.dto.OperationDTO;
 import br.com.calculadora.interest.models.entities.OperationEntity;
 import br.com.calculadora.interest.repositories.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class OperationDAOImpl implements OperationDAO{
     @Autowired
     OperationRepository operationRepository;
 
+    @Autowired
+    ModelMapperConfig modelMapper;
 
     @Override
     public List<OperationEntity> findAll() {
@@ -27,6 +31,10 @@ public class OperationDAOImpl implements OperationDAO{
         return optionalOperationEntity.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
+    @Override
+    public OperationEntity create(OperationDTO operationDTO) {
+        return operationRepository.save(modelMapper.mapper().map(operationDTO, OperationEntity.class));
+    }
 
 
 }
