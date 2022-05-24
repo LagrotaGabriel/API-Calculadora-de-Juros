@@ -1,6 +1,7 @@
 package br.com.calculadora.interest.models.entities;
 
 import br.com.calculadora.interest.models.enums.InterestTypeEnum;
+import br.com.calculadora.interest.models.enums.TimeCategory;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -17,30 +18,31 @@ import java.time.LocalDateTime;
 public class OperationEntity {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "operation")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(name = "timeStamp", nullable = false, unique = false, updatable = true)
+    @Column(name = "timeStamp", nullable = true, unique = false, updatable = true)
     private LocalDateTime localDateTime;
 
-    @NotNull
     @Column(name = "applied", nullable = true, unique = false, updatable = true)
     private Double applied;
 
-    @NotNull
     @Column(name = "amount", nullable = true, unique = false, updatable = true)
     private Double amount;
 
-    @NotNull
     @Column(name = "interestRate", nullable = true, unique = false, updatable = true)
     private Double interestRate;
 
-    @NotNull
     @Column(name = "interest", nullable = true, unique = false, updatable = true)
     private Double interest;
+
+    @Column(name = "time", nullable = true, unique = false, updatable = true)
+    private Integer time;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "timeCaregory", nullable = true, unique = false, updatable = true)
+    private TimeCategory timeCategory;
 
     @NotNull
     @Enumerated(EnumType.STRING)
