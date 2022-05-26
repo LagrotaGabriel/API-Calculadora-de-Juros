@@ -1,6 +1,6 @@
 package br.com.calculadora.interest.models.enums;
 
-public enum InterestTypeEnum {
+public enum InterestType {
 
     SIMPLE(1, "Simple Interest"),
     COMPOUND(2, "Compound Interest");
@@ -8,7 +8,7 @@ public enum InterestTypeEnum {
     private Integer code;
     private String desc;
 
-    InterestTypeEnum(Integer code, String desc) {
+    InterestType(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }

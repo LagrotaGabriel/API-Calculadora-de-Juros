@@ -1,6 +1,7 @@
 package br.com.calculadora.interest.models.entities;
 
-import br.com.calculadora.interest.models.enums.InterestTypeEnum;
+import br.com.calculadora.interest.models.enums.FetchedParameter;
+import br.com.calculadora.interest.models.enums.InterestType;
 import br.com.calculadora.interest.models.enums.TimeCategory;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -41,12 +42,16 @@ public class OperationEntity {
     private Integer time;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "timeCaregory", nullable = true, unique = false, updatable = true)
+    @Column(name = "fetchedParameter", nullable = false, unique = false, updatable = true)
+    private FetchedParameter fetchedParameter;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "timeCategory", nullable = true, unique = false, updatable = true)
     private TimeCategory timeCategory;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "interestType", nullable = false, unique = false, updatable = true)
-    private InterestTypeEnum interestTypeEnum;
+    private InterestType interestType;
 
 }

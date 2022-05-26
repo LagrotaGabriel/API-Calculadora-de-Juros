@@ -1,6 +1,7 @@
 package br.com.calculadora.interest.models.dto;
 
-import br.com.calculadora.interest.models.enums.InterestTypeEnum;
+import br.com.calculadora.interest.models.enums.FetchedParameter;
+import br.com.calculadora.interest.models.enums.InterestType;
 import br.com.calculadora.interest.models.enums.TimeCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -36,9 +37,12 @@ public class OperationDTO {
     private Integer time;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    private FetchedParameter fetchedParameter;
+
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private TimeCategory timeCategory;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    private InterestTypeEnum interestTypeEnum;
+    private InterestType interestType;
 
 }
