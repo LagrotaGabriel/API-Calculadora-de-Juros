@@ -1,6 +1,7 @@
 package br.com.calculadora.interest.services.dao;
 
 import br.com.calculadora.interest.config.ModelMapperConfig;
+import br.com.calculadora.interest.exceptions.MethodArgumentTypeMismatchException;
 import br.com.calculadora.interest.exceptions.ObjectNotFoundException;
 import br.com.calculadora.interest.models.dto.OperationDTO;
 import br.com.calculadora.interest.models.entities.OperationEntity;

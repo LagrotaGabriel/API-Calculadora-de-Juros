@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +24,7 @@ public class OperationResource {
     @Autowired
     OperationDAOImpl operationDAO;
 
-    public static final String ID = "/{id}";
-
-    @GetMapping(value = ID)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<OperationDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok().body(modelMapper.mapper().map(operationDAO.findById(id), OperationDTO.class));
     }
@@ -45,10 +44,11 @@ public class OperationResource {
     @PostMapping
     public ResponseEntity<OperationDTO> create(@RequestBody OperationDTO operationDTO){
 
+        operationDTO.setLocalDateTime(LocalDateTime.now());
         URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest().path(ID).buildAndExpand(operationDAO.create(operationDTO).getId()).toUri();
-
+                .fromCurrentRequest().path("/id").buildAndExpand(operationDAO.create(operationDTO).getId()).toUri();
         return ResponseEntity.created(uri).build();
+
     }
 
 }
