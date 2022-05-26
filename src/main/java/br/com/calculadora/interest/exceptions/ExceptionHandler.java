@@ -41,5 +41,14 @@ public class ExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<StandartError> nullPointerException(NullPointerException nullPointerException,
+                                                              HttpServletRequest httpServletRequest){
 
+        StandartError error = new StandartError(LocalDateTime.now(),
+                400, nullPointerException.getMessage(), httpServletRequest.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+
+    }
 }
