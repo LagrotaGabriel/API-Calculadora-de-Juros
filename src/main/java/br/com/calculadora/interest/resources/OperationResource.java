@@ -4,6 +4,7 @@ import br.com.calculadora.interest.config.ModelMapperConfig;
 import br.com.calculadora.interest.models.dto.OperationDTO;
 import br.com.calculadora.interest.models.entities.OperationEntity;
 import br.com.calculadora.interest.services.dao.OperationDAOImpl;
+import br.com.calculadora.interest.validations.OperationAttributesValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
