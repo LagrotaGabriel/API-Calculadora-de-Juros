@@ -21,5 +21,16 @@ public class ExceptionHandler {
 
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<StandartError> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException methodArgumentTypeMismatchException,
+                                                                             HttpServletRequest httpServletRequest){
+
+        StandartError error = new StandartError(LocalDateTime.now(),
+                400, methodArgumentTypeMismatchException.getMessage(), httpServletRequest.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+
+    }
+
 
 }
