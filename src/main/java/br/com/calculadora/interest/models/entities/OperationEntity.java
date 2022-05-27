@@ -1,6 +1,5 @@
 package br.com.calculadora.interest.models.entities;
 
-import br.com.calculadora.interest.models.enums.FetchedParameter;
 import br.com.calculadora.interest.models.enums.InterestType;
 import br.com.calculadora.interest.models.enums.TimeCategory;
 import com.sun.istack.NotNull;
@@ -20,33 +19,34 @@ public class OperationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "operation")
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 
-    @Column(name = "timeStamp", nullable = true, unique = false, updatable = true)
+    @NotNull
+    @Column(name = "timeStamp", nullable = false, unique = false, updatable = true)
     private LocalDateTime localDateTime;
 
-    @Column(name = "applied", nullable = true, unique = false, updatable = true)
+    @NotNull
+    @Column(name = "applied", nullable = false, unique = false, updatable = true)
     private Double applied;
 
-    @Column(name = "amount", nullable = true, unique = false, updatable = true)
-    private Double amount;
-
-    @Column(name = "interestRate", nullable = true, unique = false, updatable = true)
+    @NotNull
+    @Column(name = "interestRate", nullable = false, unique = false, updatable = true)
     private Double interestRate;
+
+    @NotNull
+    @Column(name = "time", nullable = false, unique = false, updatable = true)
+    private Integer time;
 
     @Column(name = "interest", nullable = true, unique = false, updatable = true)
     private Double interest;
 
-    @Column(name = "time", nullable = true, unique = false, updatable = true)
-    private Integer time;
+    @Column(name = "amount", nullable = true, unique = false, updatable = true)
+    private Double amount;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "fetchedParameter", nullable = false, unique = false, updatable = true)
-    private FetchedParameter fetchedParameter;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "timeCategory", nullable = true, unique = false, updatable = true)
+    @Column(name = "timeCategory", nullable = false, unique = false, updatable = true)
     private TimeCategory timeCategory;
 
     @NotNull
