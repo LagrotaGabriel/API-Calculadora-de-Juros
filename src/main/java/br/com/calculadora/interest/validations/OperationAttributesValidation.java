@@ -2,26 +2,21 @@ package br.com.calculadora.interest.validations;
 
 import br.com.calculadora.interest.models.dto.OperationDTO;
 import br.com.calculadora.interest.services.OperationService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Fórmula para calcular montante:
- * m = j + c (MONTANTE = JUROS + CAPITAL)
- *
- * Fórmula para calcular juros simples:
- * j = c * i * t (JUROS = CAPITAL * TAXA DE JUROS * TEMPO INVESTIDO)
- *
- * Fórmula para calcular juros compostos:
- * m = c * (1 + i) ^ t (MONTANTE = CAPITAL * (1 + TAXA DE JUROS ) ^ TEMPO INVESTIDO)
+/** Método responsável por fazer as validações e distribuições com relação ao cálculo matemático dos juros
+ ** @author Gabriel Lagrota
+ ** @version 1.0.0
+ ** @email gabriellagrota23@gmail.com
+ ** @since 30/05/2022
  **/
 public class OperationAttributesValidation {
 
     /* Instanciação da classe de processamento da entidade OperationServiceEntity,
      * que tem como objetivo realizar os cálculos e processamentos do sistema */
-    @Autowired OperationService operationService;
+    OperationService operationService = new OperationService();
 
     /** Método responsável por retornar uma lista com o nome dos atributos nulos passados pelo usuário via POST
      * @param operationDTO -> Recebe em seu parâmetro um objeto do tipo OperationDTO
@@ -53,9 +48,24 @@ public class OperationAttributesValidation {
      *  no parâmetro da operação na qual o mesmo esteja buscando
      * @param operationDTO -> Recebe em seu parâmetro um objeto do tipo OperationDTO
      * @return -> Retorna um Boolean com true se as inserções forem validadas e false se estiverem incorretas */
-    public OperationDTO attributesValidation(OperationDTO operationDTO) {
+    public OperationDTO operationValidation(OperationDTO operationDTO) {
+        
+        /* DISTRIBUI PARA A OPERAÇÃO CORRESPONDENTE AO TIPO DE JUROS SOLICITADO*/
+        switch(operationDTO.getInterestType()){
+            
+            /* CASO O JUROS SEJA JUROS SIMPLES, É ENCAMINHADO PARA OPERAÇÃO DE JUROS SIMPLES*/
+            case SIMPLE:
+                operationDTO = operationService.simpleInterestOperation(operationDTO);
+                break;
 
+            /* CASO O JUROS SEJA JUROS COMPOSTOS, É ENCAMINHADO PARA OPERAÇÃO DE JUROS COMPOSTOS */
+            case COMPOUND:
+                operationDTO = operationService.compoundInterestOperation(operationDTO);
+                break;
 
+        }
+
+        /* RETORNA O OBJETO operationDTO*/
         return operationDTO;
     }
 }
