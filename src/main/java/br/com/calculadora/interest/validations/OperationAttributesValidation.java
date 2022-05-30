@@ -23,6 +23,7 @@ public class OperationAttributesValidation {
      * @return -> Retorna uma lista com o nome dos atributos nulos passados pelo usuário via POST */
     public List<String> nullAttributes(OperationDTO operationDTO){
 
+        // Instancia uma lista vazia para incluir uma listagem dos atributos que estão vazios
         List<String> attributes = new ArrayList<>();
 
         if(operationDTO.getApplied() == null){
@@ -41,6 +42,7 @@ public class OperationAttributesValidation {
             attributes.add("interestType");
         }
 
+        // Retorna a lista preenchida com os atributos que estão vazios
         return attributes;
     }
 
