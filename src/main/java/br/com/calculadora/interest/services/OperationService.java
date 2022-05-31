@@ -1,9 +1,14 @@
 package br.com.calculadora.interest.services;
 
-import br.com.calculadora.interest.exceptions.InvalidParametersException;
-import br.com.calculadora.interest.models.dto.OperationDTO;
-import br.com.calculadora.interest.models.enums.InterestType;
+import br.com.calculadora.interest.models.requests.OperationRequest;
+import br.com.calculadora.interest.models.responses.OperationResponse;
+import br.com.calculadora.interest.resources.exceptions.NullPointerException;
+import br.com.calculadora.interest.validations.OperationAttributesValidation;
+import org.modelmapper.MappingException;
 import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 
 /**
  * Fórmula para calcular montante:
@@ -18,63 +23,90 @@ import org.springframework.stereotype.Service;
 @Service
 public class OperationService {
 
-    /** Método que realiza o cálculo do montante, seta no objeto DTO e retorna o OperationDTO com o valor calculado
-     * Fórmula utilizada -> M = C + J (MONTANTE = CAPITAL INICIAL + JUROS TOTAIS)
-     * @param operationDTO -> Recebe como parâmetro um objeto do tipo OperationDTO
-     * @return -> Retorna o objeto OperationDTO com o valor do montante atualizado */
-    public OperationDTO amountOperation(OperationDTO operationDTO){
-        operationDTO.setAmount(operationDTO.getApplied() + operationDTO.getInterest());
-        return operationDTO;
+    /* Instanciação do DecimalFormat, que tem como objetivo formatar os números decimais para duas casas decimais*/
+    DecimalFormat df = new DecimalFormat("###.##");
+
+    OperationResponse operationResponse = new OperationResponse();
+
+    OperationAttributesValidation operationAttributesValidation = new OperationAttributesValidation();
+
+    /** Método responsável por realizar as validações de atributos inseridos pelo usuário com base
+     *  no parâmetro da operação na qual o mesmo esteja buscando
+     * @param operationRequest -> Recebe em seu parâmetro um objeto do tipo OperationRequest
+     * @return -> Retorna um Boolean com true se as inserções forem validadas e false se estiverem incorretas */
+    public OperationResponse operationDistributor(OperationRequest operationRequest){
+
+        try {
+
+            /* DISTRIBUI PARA A OPERAÇÃO CORRESPONDENTE AO TIPO DE JUROS SOLICITADO*/
+            switch (operationRequest.getInterestType()) {
+                /* CASO O JUROS SEJA JUROS SIMPLES, É ENCAMINHADO PARA OPERAÇÃO DE JUROS SIMPLES*/
+                case SIMPLE:
+                    operationResponse = simpleInterestOperation(operationRequest);
+                    break;
+
+                /* CASO O JUROS SEJA JUROS COMPOSTOS, É ENCAMINHADO PARA OPERAÇÃO DE JUROS COMPOSTOS */
+                case COMPOUND:
+                    operationResponse = compoundInterestOperation(operationRequest);
+                    break;
+            }
+
+        }
+
+        catch (MappingException | java.lang.NullPointerException nullException){
+            throw new NullPointerException("Os seguintes parâmetros são nulos: "
+                    + operationAttributesValidation.nullAttributes(operationRequest) + ", favor preencher.");
+        }
+
+        /* RETORNA O OBJETO OperationResponse */
+        return operationResponse;
     }
 
-    /** Método que realiza o cálculo dos juros simples, seta no objeto DTO e retorna o OperationDTO com o valor calculado
+    /** Método que realiza o cálculo dos juros simples, seta no objeto Response e retorna o Response com o valor calculado
      * Fórmula para juros simples -> J = C * i * t
      * Fórmula para Juros compostos -> M = C * ((1 + i) ^ t))
-     * @param operationDTO -> Recebe como parâmetro um objeto do tipo OperationDTO
-     * @return Retorna o objeto OperationDTO com o valor dos juros atualizado */
-    public OperationDTO simpleInterestOperation(OperationDTO operationDTO) throws InvalidParametersException {
+     * @param operationRequest -> Recebe como parâmetro um objeto do tipo OperationRequest
+     * @return Retorna o objeto OperationResponse com o valor dos juros atualizado */
+    public OperationResponse simpleInterestOperation(OperationRequest operationRequest){
 
-        /* SE O TIPO DE JUROS BUSCADO PELO USUÁRIO FOR JUROS SIMPLES */
-        if(operationDTO.getInterestType().equals(InterestType.SIMPLE)){
-            /* FÓRMULA PARA CÁLCULO DE JUROS SIMPLES */
-            operationDTO.setInterest
-                    (operationDTO.getApplied() * (operationDTO.getInterestRate()/100) * operationDTO.getTime());
-        }
+        operationResponse.setLocalDateTime(LocalDateTime.now());
 
-        /* SE O TIPO DE JUROS BUSCADO PELO USUÁRIO FOR JUROS COMPOSTOS */
-        else if(operationDTO.getInterestType().equals(InterestType.COMPOUND)){
+        Double interest = operationRequest.getApplied() * (operationRequest.getInterestRate()/100) * operationRequest.getTime();
+        /* FÓRMULA PARA CÁLCULO DE JUROS SIMPLES */
+        operationResponse.setInterest
+                (Double.valueOf(df.format(interest).replace(",", ".")));
 
-            // FÓRMULA PARA CÁLCULO DE MONTANTE DOS JUROS COMPOSTOS
-            operationDTO.setAmount
-                    (operationDTO.getApplied() * (1 + (Math.pow(operationDTO.getInterestRate()/100, operationDTO.getTime()))));
+        /* FÓRMULA PARA CÁLCULO DO MONTANTE */
+        operationResponse.setAmount
+                (operationRequest.getApplied() + operationResponse.getInterest());
 
-            // FÓRMULA PARA CÁLCULO DOS JUROS DOS JUROS COMPOSTOS
-            operationDTO.setInterest
-                    (operationDTO.getAmount() - operationDTO.getApplied());
-
-        }
-
-        // RETORNA O operationDTO com o resultado da operação setado
-        return operationDTO;
+        // RETORNA O OperationResponse com o resultado da operação setado
+        return operationResponse;
 
     }
 
-    /** Método que realiza o cálculo dos juros compostos, seta no objeto DTO e retorna o OperationDTO com o valor calculado
+    /** Método que realiza o cálculo dos juros compostos, seta no objeto DTO e retorna o OperationResponse com o valor calculado
      * Fórmula para Juros compostos -> M = C * ((1 + i) ^ t))
-     * @param operationDTO -> Recebe como parâmetro um objeto do tipo OperationDTO
-     * @return Retorna o objeto OperationDTO com o valor dos juros atualizado */
-    public OperationDTO compoundInterestOperation(OperationDTO operationDTO) throws InvalidParametersException {
+     * @param operationRequest -> Recebe como parâmetro um objeto do tipo OperationRequest
+     * @return Retorna o objeto OperationResponse com o valor dos juros atualizado */
+    public OperationResponse compoundInterestOperation(OperationRequest operationRequest) {
+
+        operationResponse.setLocalDateTime(LocalDateTime.now());
+
+        Double amount =
+                operationRequest.getApplied() * (Math.pow((1 + (operationRequest.getInterestRate()/100)),
+                        (operationRequest.getTime() * operationRequest.getTimeCategory().getMonths())));
 
         // FÓRMULA PARA CÁLCULO DE MONTANTE DOS JUROS COMPOSTOS
-        operationDTO.setAmount
-                (operationDTO.getApplied() * (1 + (Math.pow(operationDTO.getInterestRate()/100, operationDTO.getTime()))));
+        operationResponse
+                .setAmount(Double.valueOf(df.format(amount).replace(",", ".")));
 
         // FÓRMULA PARA CÁLCULO DOS JUROS DOS JUROS COMPOSTOS
-        operationDTO.setInterest
-                (operationDTO.getAmount() - operationDTO.getApplied());
+        operationResponse.setInterest
+                (operationResponse.getAmount() - operationRequest.getApplied());
 
-        // RETORNA O operationDTO com o resultado da operação setado
-        return operationDTO;
+        // RETORNA O OperationResponse com o resultado da operação setado
+        return operationResponse;
 
     }
 

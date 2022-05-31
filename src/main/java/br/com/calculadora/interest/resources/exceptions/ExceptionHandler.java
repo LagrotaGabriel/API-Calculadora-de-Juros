@@ -1,4 +1,4 @@
-package br.com.calculadora.interest.exceptions;
+package br.com.calculadora.interest.resources.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,4 +62,15 @@ public class ExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 
     }
+
+//    @org.springframework.web.bind.annotation.ExceptionHandler(JsonParseException.class)
+//    public ResponseEntity<StandartError> jsonParseException(JsonParseException jsonParseException,
+//                                                            HttpServletRequest httpServletRequest){
+//
+//        StandartError error = new StandartError(LocalDateTime.now(), 400, jsonParseException.getMessage(),
+//                httpServletRequest.getRequestURI());
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+//
+//    }
 }

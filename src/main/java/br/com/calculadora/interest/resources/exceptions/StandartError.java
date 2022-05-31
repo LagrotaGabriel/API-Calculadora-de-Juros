@@ -1,4 +1,4 @@
-package br.com.calculadora.interest.exceptions;
+package br.com.calculadora.interest.resources.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

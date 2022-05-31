@@ -1,4 +1,4 @@
-package br.com.calculadora.interest.exceptions;
+package br.com.calculadora.interest.resources.exceptions;
 
 public class MethodArgumentTypeMismatchException extends RuntimeException{
 
