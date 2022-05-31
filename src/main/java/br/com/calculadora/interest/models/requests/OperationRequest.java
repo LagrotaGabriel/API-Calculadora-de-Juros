@@ -8,17 +8,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 public class OperationRequest {
 
+    @JsonProperty(value = "timestamp", access = JsonProperty.Access.WRITE_ONLY)
+    private LocalDateTime localDateTime;
+
     @JsonProperty(value = "capital", access = JsonProperty.Access.WRITE_ONLY)
     private Double applied;
 
     @JsonProperty(value = "taxa", access = JsonProperty.Access.WRITE_ONLY)
     private Double interestRate;
+
+    @JsonProperty(value = "montante", access = JsonProperty.Access.READ_ONLY)
+    private Double amount;
+
+    @JsonProperty(value = "juros", access = JsonProperty.Access.READ_ONLY)
+    private Double interest;
 
     @JsonProperty(value = "tempo", access = JsonProperty.Access.WRITE_ONLY)
     private Integer time;
