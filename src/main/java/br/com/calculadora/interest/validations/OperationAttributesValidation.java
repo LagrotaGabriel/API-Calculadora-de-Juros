@@ -9,8 +9,7 @@ import java.util.List;
  ** @author Gabriel Lagrota
  ** @version 1.0.0
  ** @email gabriellagrota23@gmail.com
- ** @since 30/05/2022
- **/
+ ** @since 30/05/2022 **/
 public class OperationAttributesValidation {
 
     /** Método responsável por retornar uma lista com o nome dos atributos nulos passados pelo usuário via POST
@@ -22,19 +21,19 @@ public class OperationAttributesValidation {
         List<String> attributes = new ArrayList<>();
 
         if(operationRequest.getApplied() == null){
-            attributes.add("applied");
+            attributes.add("capital");
         }
         if(operationRequest.getInterestRate() == null){
-            attributes.add("interestRate");
+            attributes.add("taxa");
         }
         if(operationRequest.getTime() == null){
-            attributes.add("time");
+            attributes.add("tempo");
         }
         if(operationRequest.getTimeCategory() == null){
-            attributes.add("timeCategory");
+            attributes.add("periodicidade");
         }
         if(operationRequest.getInterestType() == null){
-            attributes.add("interestType");
+            attributes.add("tipo");
         }
 
         // Retorna a lista preenchida com os atributos que estão vazios
