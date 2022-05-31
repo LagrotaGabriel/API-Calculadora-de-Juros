@@ -63,14 +63,14 @@ public class ExceptionHandler {
 
     }
 
-//    @org.springframework.web.bind.annotation.ExceptionHandler(JsonParseException.class)
-//    public ResponseEntity<StandartError> jsonParseException(JsonParseException jsonParseException,
-//                                                            HttpServletRequest httpServletRequest){
-//
-//        StandartError error = new StandartError(LocalDateTime.now(), 400, jsonParseException.getMessage(),
-//                httpServletRequest.getRequestURI());
-//
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-//
-//    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<StandartError> NumberFormatException(NumberFormatException numberFormatException,
+                                                               HttpServletRequest httpServletRequest){
+
+        StandartError error = new StandartError
+                (LocalDateTime.now(), 400, numberFormatException.getMessage(), httpServletRequest.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+
+    }
 }
