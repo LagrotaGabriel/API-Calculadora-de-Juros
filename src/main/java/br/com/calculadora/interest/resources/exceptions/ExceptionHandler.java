@@ -3,12 +3,13 @@ package br.com.calculadora.interest.resources.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class ExceptionHandler {
+public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandartError> ObjectNotFound(ObjectNotFoundException objectNotFoundException,
@@ -19,26 +20,6 @@ public class ExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 
-    }
-
-    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<StandartError> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException methodArgumentTypeMismatchException,
-                                                                             HttpServletRequest httpServletRequest){
-        StandartError error = new StandartError(LocalDateTime.now(),
-                400, methodArgumentTypeMismatchException.getMessage(), httpServletRequest.getRequestURI());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-
-    }
-
-    @org.springframework.web.bind.annotation.ExceptionHandler(InvalidParametersException.class)
-    public ResponseEntity<StandartError> invalidParametersException(InvalidParametersException invalidParametersException,
-                                                                    HttpServletRequest httpServletRequest){
-
-        StandartError error = new StandartError(LocalDateTime.now(),
-                400, invalidParametersException.getMessage(), httpServletRequest.getRequestURI());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(NullPointerException.class)
@@ -52,23 +33,12 @@ public class ExceptionHandler {
 
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<StandartError> httpMessageNotReadableException(HttpMessageNotReadableException httpMessageNotReadableException,
-                                                                         HttpServletRequest httpServletRequest){
-
-        StandartError error = new StandartError(LocalDateTime.now(), 400, httpMessageNotReadableException.getMessage(),
-                httpServletRequest.getRequestURI());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-
-    }
-
-    @org.springframework.web.bind.annotation.ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<StandartError> NumberFormatException(NumberFormatException numberFormatException,
-                                                               HttpServletRequest httpServletRequest){
+    @org.springframework.web.bind.annotation.ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<StandartError> NumberFormatException(HttpServletRequest httpServletRequest){
 
         StandartError error = new StandartError
-                (LocalDateTime.now(), 400, numberFormatException.getMessage(), httpServletRequest.getRequestURI());
+                (LocalDateTime.now(), 400, "Falha de violação de dados. Favor inserir o tipo correto de entrada",
+                        httpServletRequest.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 
