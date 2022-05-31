@@ -8,6 +8,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
+/** Classe que tem como objetivo ser uma espécie de motor de redirecionamento e tratamento de exceções
+ ** @author Gabriel Lagrota
+ ** @version 1.0.0
+ ** @email gabriellagrota23@gmail.com
+ ** @since 31/05/2022 **/
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
