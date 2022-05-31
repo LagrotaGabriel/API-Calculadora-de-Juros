@@ -1,4 +1,4 @@
-package br.com.calculadora.interest.models.enums;
+package br.com.calculadora.interest.models.entities.enums;
 
 public enum InterestType {
 

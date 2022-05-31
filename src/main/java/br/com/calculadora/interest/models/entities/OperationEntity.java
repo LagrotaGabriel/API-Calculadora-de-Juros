@@ -1,7 +1,7 @@
 package br.com.calculadora.interest.models.entities;
 
-import br.com.calculadora.interest.models.enums.InterestType;
-import br.com.calculadora.interest.models.enums.TimeCategory;
+import br.com.calculadora.interest.models.entities.enums.InterestType;
+import br.com.calculadora.interest.models.entities.enums.TimeCategory;
 import com.sun.istack.NotNull;
 import lombok.*;
 
