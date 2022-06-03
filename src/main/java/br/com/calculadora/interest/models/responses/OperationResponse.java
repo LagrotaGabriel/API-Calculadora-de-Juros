@@ -10,9 +10,9 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
 public class OperationResponse {
 
