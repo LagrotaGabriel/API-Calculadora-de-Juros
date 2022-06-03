@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandartError> ObjectNotFound(ObjectNotFoundException objectNotFoundException,
+    public ResponseEntity<StandartError> objectNotFoundException(ObjectNotFoundException objectNotFoundException,
                                                         HttpServletRequest httpServletRequest){
 
         StandartError error = new StandartError(LocalDateTime.now(),
