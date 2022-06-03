@@ -24,35 +24,35 @@ public class OperationEntity {
     private Long id;
 
     @NotNull
-    @Column(name = "timeStamp", nullable = false, unique = false, updatable = true)
+    @Column(name = "timeStamp", nullable = false)
     private LocalDateTime localDateTime;
 
     @NotNull
-    @Column(name = "applied", nullable = false, unique = false, updatable = true)
+    @Column(name = "applied", nullable = false)
     private Double applied;
 
     @NotNull
-    @Column(name = "interestRate", nullable = false, unique = false, updatable = true)
+    @Column(name = "interestRate", nullable = false)
     private Double interestRate;
 
     @NotNull
-    @Column(name = "time", nullable = false, unique = false, updatable = true)
+    @Column(name = "time", nullable = false)
     private Integer time;
 
-    @Column(name = "interest", nullable = true, unique = false, updatable = true)
+    @Column(name = "interest")
     private Double interest;
 
-    @Column(name = "amount", nullable = true, unique = false, updatable = true)
+    @Column(name = "amount")
     private Double amount;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "timeCategory", nullable = false, unique = false, updatable = true)
+    @Column(name = "timeCategory", nullable = false)
     private TimeCategory timeCategory;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "interestType", nullable = false, unique = false, updatable = true)
+    @Column(name = "interestType", nullable = false)
     private InterestType interestType;
 
 }

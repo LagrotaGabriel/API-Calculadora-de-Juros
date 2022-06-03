@@ -9,10 +9,10 @@ public enum TimeCategory {
     SEMESTER(5, "Semester", 180, 6.0),
     YEAR(6, "Year", 360, 12.0);
 
-    private Integer code;
-    private String desc;
-    private Integer days;
-    private Double months;
+    private final Integer code;
+    private final String desc;
+    private final Integer days;
+    private final Double months;
 
     TimeCategory(Integer code, String desc, Integer days, Double months) {
         this.code = code;
