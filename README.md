@@ -67,6 +67,13 @@ Busca uma operação por id no banco de dados
 - Lombok
 - J Unit
 
+## Acesso ao projeto
+O projeto está disponibilizado para utilização gratuita e ilimitada na url:<br>
+https://api-calculadorajuros.herokuapp.com <br>
+Podendo ser acessado pelo swagger pela url: <br>
+https://api-calculadorajuros.herokuapp.com/swagger-ui.html
+
+
 ## Abrir e rodar o projeto
 1. Para rodar o projeto basta utilizar o git clone com a url:<br>https://github.com/LagrotaGabriel/API-Calculadora-de-Juros.git
 2. Em seguida, recomenda-se que configure o arquivo `application.properties` com o código abaixo para configuração da persistência do projeto
