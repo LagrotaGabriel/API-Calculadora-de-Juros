@@ -26,9 +26,9 @@ a resposta de sua operação solicitada
 ## Funcionalidades
 
 :heavy_check_mark: `Cálculo de juros simples e compostos:` A API realiza o cálculo de juros simples e compostos, de acordo com a
-:heavy_check_mark: solicitação do usuário
+solicitação do usuário
 
-`Cálculo de montante:` A API realiza o cálculo do montante da operação passada pelo usuário por requisição via post
+:heavy_check_mark: `Cálculo de montante:` A API realiza o cálculo do montante da operação passada pelo usuário por requisição via post
 
 ## Swagger
 
