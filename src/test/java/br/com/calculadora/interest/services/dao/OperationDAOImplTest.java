@@ -9,10 +9,10 @@ import br.com.calculadora.interest.resources.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -20,16 +20,17 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class OperationDAOImplTest {
 
     @InjectMocks
-    OperationDAOImpl operationDAO;
+    private OperationDAOImpl operationDAO;
 
     @Mock
-    OperationRepository operationRepository;
+    private OperationRepository operationRepository;
 
     @Mock
-    ModelMapperConfig modelMapper;
+    private ModelMapperConfig modelMapper;
 
     @Test
     @DisplayName("Should test find all method in implementation with a null list")
@@ -58,7 +59,9 @@ public class OperationDAOImplTest {
                 .withStaticLocalDateTime()
                 .build());
 
-        Mockito.when(operationDAO.findAll()).thenReturn(operationEntityList);
+        Mockito.when(operationRepository.findAll()).thenReturn(operationEntityList);
+
+        operationDAO.findAll();
 
         Assertions.assertEquals("[OperationEntity(id=1, localDateTime=2022-06-02T17:15:46.518800100, " +
                 "applied=1000.0, interestRate=10.0, time=1, interest=100.0, amount=1100.0, timeCategory=MONTH, " +
@@ -70,10 +73,11 @@ public class OperationDAOImplTest {
 
     @Test
     @DisplayName("Should test find by id method in implementation with ObjectNotFoundException")
-    public void shouldTestOperationDAOImplFindByIdMethodWithSuccess(){
+    public void shouldTestOperationDAOImplFindByIdMethodWithException(){
 
         try {
-            Mockito.when(operationDAO.findById(Mockito.any())).thenReturn(OperationEntityBuilder.builder().build());
+            Mockito.when(operationRepository.findById(Mockito.any())).thenReturn(Optional.empty());
+            operationDAO.findById(1L);
             Assertions.fail();
         }
         catch(ObjectNotFoundException e){
@@ -83,11 +87,23 @@ public class OperationDAOImplTest {
     }
 
     @Test
+    @DisplayName("Should test find by id method in implementation with success")
+    public void shouldTestOperationDAOImplFindByIdMethodWithSuccess() throws ObjectNotFoundException{
+
+        Mockito.when(operationRepository.findById(Mockito.any())).thenReturn(Optional.of(OperationEntityBuilder.builder().build()));
+        operationDAO.findById(1L);
+
+    }
+
+    @Test
     @DisplayName("Should test creation method in implementation with success")
     public void shouldTestOperationDAOImplCreationMethodWithSuccess() {
 
-        //TODO
-        //Mockito.when(operationDAO.create(OperationRequestBuilder.builder().build())).thenReturn(OperationEntityBuilder.builder().build());
+        Mockito.when(operationRepository.save(Mockito.any())).thenReturn(OperationEntityBuilder.builder().build());
+
+        Mockito.when(modelMapper.mapper()).thenReturn(new ModelMapper());
+
+        OperationEntity operationEntity = operationDAO.create(OperationRequestBuilder.builder().build());
 
     }
 
