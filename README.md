@@ -7,6 +7,7 @@ API Que realiza operações de juros simples e compostos com base no valor passa
 - [Funcionalidades](#funcionalidades)
 - [Swagger](#swagger)
 - [End Points](#end-points)
+- [Modelo de JSON](#modelo-de-json)
 - [Testes unitários](#testes-unitários)
 - [Tecnologias utilizadas](#tecnologias-utilizadas)
 - [Acesso ao projeto](#acesso-ao-projeto)
@@ -47,6 +48,30 @@ Busca uma operação por id no banco de dados
 
 > [POST] create: api/operation<br>
 > Cria uma nova operação no banco de dados
+
+## Modelo de JSON
+
+> Modelo de JSON para requisição via post, com os tipos dos valores e tipos de enums que podem ser utilizados
+
+>{ <br>
+> "capital": DOUBLE <br>
+> "taxa": DOUBLE <br>
+> "tempo": INTEGER <br>
+> "periodicidade": "ENUM" (DAY, MONTH, BIMESTER, TRIMESTER, SEMESTER, YEAR) <br>
+> "tipo": "ENUM" (SIMPLE, COMPOUND) <br>
+> }
+
+> Abaixo, segue um modelo de JSON via post
+
+```json
+{
+   "capital": 1000.0,
+   "taxa": 10.0,
+   "tempo": 1,
+   "periodicidade": "MONTH",
+   "tipo": "SIMPLE"
+}
+```
 
 ## Testes unitários
 
